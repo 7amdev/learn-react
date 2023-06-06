@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostraping React in Html</title>
+</head>
+<body>
+    <div id="root"></div>   
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        
+//  JSX returns only 1(one) element per call. In order
+//  to make it return 2(two) elements, main and footer, 
+//  we use [React.Fragment] as a wrapper, making the code
+//  clean on the DOM.
+//  We could use [div] tag to wrap those elements but 
+//  it would polute the DOM.
+
+        const main_el = (
+            <React.Fragment>
+                <main id="main">
+                    <h1>My Blog</h1>
+                    <article>
+                        <h2>My first blog post</h2>
+                        <p className="title">This is the content of my post</p>
+                    </article>    
+                </main>
+                <footer>This is the footer</footer>
+            </React.Fragment>
+        );
+
+        ReactDOM.render(
+            main_el,
+            document.getElementById('root'), 
+            null
+        );
+    </script>
+</body>
+</html>
