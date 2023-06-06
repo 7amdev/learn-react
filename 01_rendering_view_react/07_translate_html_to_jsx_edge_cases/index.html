@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostraping React in Html</title>
+</head>
+<body>
+    <label for="testinput">Test input:</label>
+    <input id="testinput" type="text" class="form-field" maxlength="10" readonly>
+    <div id="root"></div>   
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        
+//  HTML diff JSX
+//  HTML: lowercase attributes  | JSX: camelCase attributes 
+//  HTML: class                 | JSX: className
+//  HTML: Closing Tag optional  | JSX: Tags must be closed
+//  HTML: <label for="">        | JSX: <label htmlFor="">
+        const input_el = (
+            <React.Fragment>
+                <label htmlFor="jsxinput">Test input:</label>
+                <input id="jsxinput" type="text" className="form-field" maxLength="10" />
+            </React.Fragment>
+        );
+
+        ReactDOM.render(
+            input_el,
+            document.getElementById('root'), 
+            null
+        );
+    </script>
+</body>
+</html>
