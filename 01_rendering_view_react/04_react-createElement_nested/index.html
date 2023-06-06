@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostraping React in Html</title>
+</head>
+<body>
+    <div id="root"></div>   
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/javascript">
+        const heading_el = React.createElement('h1', null, 'My Blog');
+        const article_heading_el = React.createElement(
+            'h2', 
+            { className: 'title'},
+            'My first blog post'
+        );
+        const article_paragraph_el = React.createElement(
+            'p',
+            null,
+            'This is the content of my post'
+        );
+        const article_el = React.createElement(
+            'article', 
+            null, 
+            article_heading_el,
+            article_paragraph_el
+        );
+        const main_el = React.createElement(
+            'main', 
+            null, 
+            heading_el,
+            article_el
+        );
+
+
+        ReactDOM.render(
+            main_el,
+            document.getElementById('root'), 
+            null
+        );
+    </script>
+</body>
+</html>
