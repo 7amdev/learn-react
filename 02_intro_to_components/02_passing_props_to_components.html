@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostraping React in Html</title>
+</head>
+<body>
+    <div id="root"></div>   
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">  
+
+        const Paragraph = function (props) {
+            return  (
+                <p>{props.name}</p>
+            );
+        };
+        
+//  Using Javascript destructuring we can simplify the code
+
+        const info = { name: 'John Doe', gender: "Male" };
+        const Profile = function ({ name, gender }) {
+            return (
+                <div>
+                    <h4>Profile ----</h4>
+                    <p>| Name: { name }, Gender: { gender }</p>
+                    ----------------------------
+                </div>
+            );         
+        };
+
+//  Passing Object value instead of individual values
+
+        const ProfileV2 = function ({ data }) {
+            return (
+                <div>
+                    <h4>Profile V2</h4>
+                    <p>Name: { data.name }, Gender: { data.gender }</p>
+                    ----------------------------
+                </div>
+            );
+        };
+
+        const error = { has_error: true, message: "Panic! Something went wrong!" };
+        const ErrorBlock = function ({ has_error, message }) {
+            return (
+                <div  className={has_error ? 'error' : 'default'}>
+                    {
+                        has_error 
+                        ? <p>{ message }</p>
+                        : <p>Stop panicking!</p>
+                    }
+                </div>
+            );
+        };
+
+//  Notice how we pass a boolean value in the component <ErrorBlock has_error={true} />.
+//  By wrapping the value in curly-braces it maintains the value type which is 
+//  needed to perform the logic in the view rendering.
+
+        const container = (
+            <div>
+                <Paragraph name="John Doe"/>
+                { Paragraph(info) }
+
+                <Profile   name="John Doe" gender="Male" />
+                { Profile(info) }
+
+                <ProfileV2 data={info}/>
+
+                <ErrorBlock has_error={true} message={"Panic! Something went Wrong"} />
+                { ErrorBlock(error) }
+            </div> 
+        );
+
+        ReactDOM.render(container, document.getElementById('root'));
+
+    </script>
+</body>
+</html>

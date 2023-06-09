@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostraping React in Html</title>
+</head>
+<body>
+    <div id="root"></div>   
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">  
+
+        const Paragraph = function ({ text }) {
+            return  (
+                <p>{ text }</p>
+            );
+        };
+
+// In order to pass the paragraph text value in the Section Component
+// we have to create a new prop in the Section Component and then render it dynamically
+// on the child Paragraph Component. While this approach is not wrong, in this case, 
+// we can use a composition pattern to make it more re-usable.
+
+//      const Post = function ({ headingText, paragraph_text }) {
+//          return (
+//              <section>
+//                   <h1>{ headingText }</h1>
+//                   <Paragraph text={ paragraph_text } />
+//              </section>
+//          );
+//      };
+
+//      ReactDOM.render(
+//          <Post 
+//              headingText="My first blog post"
+//              paragraph_text="This is my first paragraph." 
+//          />, 
+//          document.getElementById('root')
+//      );
+
+
+// COMPOSITION Pattern Approach
+// - More flexible component
+// - Re-usable
+// - Reduced numbers of props
+
+        const Post = function ({ headingText, children }) {
+            return (
+                <section>
+                    <h1>{ headingText }</h1>
+                    { children }
+                </section>
+            );
+        }; 
+
+        const PostBlock = function () {
+            return (
+                <Post headingText="My first blog post">
+                    <Paragraph text="This is my first paragraph." />
+                    <Paragraph text="My second paragraph." />
+                </Post>
+            );
+        };
+        
+        ReactDOM.render(
+            <PostBlock />, 
+            document.getElementById('root')
+        );
+
+        
+    </script>
+</body>
+</html>

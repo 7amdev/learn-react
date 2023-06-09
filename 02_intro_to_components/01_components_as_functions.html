@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostraping React in Html</title>
+</head>
+<body>
+    <div id="root"></div>   
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const get_text = function (name) {
+            return `My name is ${name}.`;
+        };   
+
+        const multiply = function (x, y) {
+            return (x * y);
+        };
+
+        const get_action = function (name) {
+            return (
+                { type: 'SET_NAME', name }
+            );
+        };
+
+        const Counter = function (from) {
+            let start_value = from || 0;
+            return function () {
+                return start_value += 1;
+            };
+        };
+
+        const count_from_10 = Counter(10);
+        const count_from_25 = Counter(25);
+  
+        const Paragraph = function () {
+            return  (
+                <p>John Doe</p>
+            );
+        };        
+
+        const container = (
+            <React.Fragment> 
+                <div>{ get_text('Alfredo') }</div>
+                <div>{ multiply(10, 20) }</div>
+                <div>{ JSON.stringify(get_action('Alfredo')) }</div>
+                <div>
+                    count_from(10): { count_from_10() }
+                    <br /> 
+                    count_from(25): { count_from_25() }
+                </div>
+                <div>{ Paragraph() }</div>
+                 <div><Paragraph /></div> 
+            </React.Fragment>
+        );
+
+        ReactDOM.render(container, document.getElementById('root'));
+
+    </script>
+</body>
+</html>
