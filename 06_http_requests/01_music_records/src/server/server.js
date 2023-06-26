@@ -1,22 +1,22 @@
 const express = require('express');
 const body_parser = require('body-parser');
-const bodyParser = require('body-parser');
+const { generate_uid } = require('../Utils');
 
 let records = [
     {
-        id: 1,
+        id: generate_uid(),
         name: 'Album Name #1', 
         artist_name: 'Artist Name #1',
         description: 'Alboum description #1'
     },
     {
-        id: 2,
+        id: generate_uid(),
         name: 'Album Name #2', 
         artist_name: 'Artist Name #2',
         description: 'Alboum description #2'
     },
     {
-        id: 3,
+        id: generate_uid(),
         name: 'Album Name #3', 
         artist_name: 'Artist Name #3',
         description: 'Alboum description #3'
