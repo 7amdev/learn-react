@@ -13,4 +13,20 @@ function generate_uid () {
     return uid;
 }
 
-module.exports = { generate_uid };
+function sort (data_arr) {
+    return data_arr.sort(function (a, b) {
+        const name_a = a.name.toUpperCase();
+        const name_b = b.name.toUpperCase();
+
+        if ( name_a > name_b) return 1;
+        if ( name_a < name_b) return -1;
+
+        return 0;
+    });
+};
+
+
+module.exports = { 
+    generate_uid, 
+    sort 
+};

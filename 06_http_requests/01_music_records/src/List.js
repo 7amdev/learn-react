@@ -7,7 +7,7 @@ const List = function ({ records }) {
             {
                 records.map(function (record) {
                     return (
-                        <li key={ record.id }>
+                        <li key={ record.id.toString() }>
                             <h3>{ record.name }</h3>
                             <h4>{ record.artist_name }</h4>
                             <p>{ record.description }</p>

@@ -4,46 +4,53 @@ import Header   from "./Header";
 import Section  from "./Section";
 import Form     from "./Form";
 import List     from './List';
+import { sort } from './Utils'
 
 import './Container.css';
-
-const sort = function (records) {
-    return records.sort(function (a, b) {
-        const name_a = a.name.toUpperCase();
-        const name_b = b.name.toUpperCase();
-
-        if ( name_a > name_b) return 1;
-        if ( name_a < name_b) return -1;
-
-        return 0;
-    });
-};
 
 const Container = function () {
     const [records, set_records] = useState([]);
     const [live_text, set_live_text] = useState('');
+    const API_ENDPOINT = '/api/records';
 
     useEffect(function () {
-        fetch('/api/records')
+        fetch(API_ENDPOINT)
             .then(function (response) {
                 if (!response.ok) throw new Error('Not a valid response');
 
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
                 set_records(sort(data));
             })
             .catch(console.warn);
     }, []);
 
-    const on_submit_handler = function (record) {
-        set_records(
-            sort([...records, record])
-        );
+    const on_submit_handler = function (new_record) {
+        let request = new Request(API_ENDPOINT, {
+            method: 'POST',
+            body: JSON.stringify(new_record),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
 
-//  Pontuaction is important
-        set_live_text(`${record.name} successfuly added.`);
+        fetch(request)
+        .then(function (response) {
+            if (!response.ok) throw new Error('Not a valid response');
+
+            return response.json();
+        })
+        .then(function (data) {
+            
+            set_records(
+                sort([...records, data])
+            );    
+
+            //  Pontuaction is important
+            set_live_text(`${data.name} successfuly added.`);
+        })
+        .catch(console.warn);
     };
 
     return (
