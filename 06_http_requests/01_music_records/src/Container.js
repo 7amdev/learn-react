@@ -34,9 +34,9 @@ const Container = function ({ set_display }) {
             })
             .catch(console.warn);
         
-            return function () {
-                abort_controller.abort();
-            };
+        return function () {
+            abort_controller.abort();
+        };
 
     }, []);
 
@@ -66,6 +66,8 @@ const Container = function ({ set_display }) {
         })
         .catch(console.warn);
 
+        // This code is for testing
+        // Remove it later
         set_display(function (previous_value) {
             return !previous_value;
         });
