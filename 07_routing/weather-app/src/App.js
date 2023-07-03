@@ -29,6 +29,7 @@ const App = function () {
                     <Route path="/" element={ <Home /> } />
                     <Route path="/about" element={ <About /> } />
                     <Route path="/reports/:scale" element={ <Report /> } />
+                    <Route path="*" element={ <h1>URL Not Found</h1> } />
                 </Routes>
             </main>
             <Footer />
