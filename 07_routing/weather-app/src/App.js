@@ -11,19 +11,6 @@ import './app.css';
 const App = function () {
     return (
         <Fragment>
-            <nav aria-label="main">
-                <ul>
-                    <li>
-                        <Link to={"/reports/celsius"}>Temperature in celsius</Link>
-                    </li>
-                    <li>
-                        <Link to={"/reports/fahrenheit"}>Temperature in fahrenheit</Link>
-                    </li>
-                    <li>
-                        <Link to={"/reports/kelvin"}>Temperature in kelvin</Link>
-                    </li>
-                </ul>
-            </nav>
             <main>
                 <Routes>
                     <Route path="/" element={ <Home /> } />
