@@ -4,18 +4,23 @@ import {Routes, Route, Link} from "react-router-dom"
 import Home from "./Home";
 import About from "./About";
 import Footer from "./Footer";
+import Report from "./Report";
+
 import './app.css';
 
 const App = function () {
     return (
         <Fragment>
-            <nav aria-label="primary">
+            <nav aria-label="main">
                 <ul>
                     <li>
-                        <Link to={"/"}>Home</Link>
+                        <Link to={"/reports/celsius"}>Temperature in celsius</Link>
                     </li>
                     <li>
-                        <Link to={"about"}>About</Link>
+                        <Link to={"/reports/fahrenheit"}>Temperature in fahrenheit</Link>
+                    </li>
+                    <li>
+                        <Link to={"/reports/kelvin"}>Temperature in kelvin</Link>
                     </li>
                 </ul>
             </nav>
@@ -23,6 +28,7 @@ const App = function () {
                 <Routes>
                     <Route path="/" element={ <Home /> } />
                     <Route path="/about" element={ <About /> } />
+                    <Route path="/reports/:scale" element={ <Report /> } />
                 </Routes>
             </main>
             <Footer />
