@@ -2,14 +2,15 @@ import React, { Fragment } from "react";
 import { weather_data } from "./Weather_data";
 import { useParams } from "react-router-dom";
 
+import Section from "./Section";
+
 const Report = function () {
   const { scale } = useParams();
   const w_data = weather_data(scale.toLowerCase());
   const scale_title = scale && scale.charAt(0).toUpperCase() + scale.slice(1) || 'Kelvin';
-
+  const heading_t = `Weather Report in ${ scale_title }`;
   return (
-    <section>
-      <h1>Weather Report in{' '} { scale_title }</h1>
+    <Section heading_text={heading_t}>
       <dl>
         { 
           w_data.map(function (data) {
@@ -22,7 +23,7 @@ const Report = function () {
           }) 
         }
       </dl>
-    </section>
+    </Section>
   );
 };
 

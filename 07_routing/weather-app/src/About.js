@@ -1,10 +1,12 @@
 import React from "react";
 
+import Section from "./Section";
+
 const About = function () {
     return (
-        <section>
-            <h1>About</h1>
-        </section>
+        <Section heading_text={"About"}>
+            <p>This is the About Page.</p>
+        </Section>
     );
 };
 

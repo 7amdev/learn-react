@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Section from "./Section";
+
 const Home = function () {
     return (
-        <section>
-            <h1>Home</h1>
+        <Section heading_text={"Home"}>
             <nav aria-label="main">
                 <ul>
                     <li>
@@ -18,7 +19,8 @@ const Home = function () {
                     </li>
                 </ul>
             </nav>
-        </section>
+            <p>This is the Home Page.</p>
+        </Section>
     );
 };
 
