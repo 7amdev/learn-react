@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const IceCreamMenu = function () {
+const IceCreamMenu = function ({ data }) {
+
+  console.log(data);
   return (
     <section>
       <h2>Rock your taste buds with one of these!</h2>
       <ul>
-        <li>Ice cream #1</li>
-        <li>Ice cream #2</li>
-        <li>Ice cream #3</li>
+        {
+          data.map(item => {
+            return (
+              <li key={item.id.toString()}>
+                <section>
+                  <h3>{ item.ice_cream.name }</h3>
+                  <p>{`$${item.price} · ${item.quantity} in stock`}</p>
+                  <p>{ item.description }</p>
+                </section>
+              </li>
+            );
+          })
+        }
       </ul>
     </section>
   );
