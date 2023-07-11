@@ -14,7 +14,21 @@ const {
 } = require('./stock');
 
 const PORT = 5000;
+const STOCK_INCLUDE = {
+  ICE_CREAMS: "ice-creams"
+};
 const app = express();
+
+const key_value_map_converter = function (value_string) {
+  if (!value_string) return {};
+
+  return value_string.split(',').reduce(function (previous_value, current_value) {
+    return {
+      ...previous_value,
+      [current_value]: current_value
+    };
+  }, {});
+};
 
 app.use(bodyParser.json());
 
@@ -44,12 +58,13 @@ app.get('/api/ice-creams/:id', function (req, res) {
 });
 
 app.get('/api/stock', function (req, res) {
-  const { include } = req.query;
+  const { include } = req.query;  
+  const include_enum = key_value_map_converter(include);
   let options = {};
 
-  if (include && include["ice-cream"]) {
-    options.include_ice_cream = true;
-    options.ice_cream_get_by_id_fn = ice_cream_get_by_id;
+  if (include_enum && include_enum[STOCK_INCLUDE.ICE_CREAMS]) {
+    options.include_ice_cream       = true;
+    options.ice_cream_get_by_id_fn  = ice_cream_get_by_id;
   } 
 
   const result = stock_get(options);
@@ -66,17 +81,9 @@ app.get('/api/stock/:id', function (req, res) {
   let options = {};
   let nested_include;
 
-  if (include) {
-    nested_include = include.split(',').reduce(function (previous_value, current_value) {
-      return {
-        ...previous_value,
-        [current_value]: current_value
-      };
-    }, {});
+  const include_enum = key_value_map_converter(include);
   
-  }
-  
-  if (nested_include && nested_include['ice-creams']) {
+  if (include_enum && include_enum[STOCK_INCLUDE.ICE_CREAMS]) {
     options.include_ice_cream      = true;
     options.ice_cream_get_by_id_fn = ice_cream_get_by_id; // COMPOSITION
   } 
