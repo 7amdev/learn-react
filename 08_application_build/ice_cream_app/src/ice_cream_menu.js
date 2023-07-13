@@ -14,10 +14,8 @@ const IceCreamMenu = function () {
         return response.json();
       })
       .then(function (menu_data) {
-        set_loading(function (previous_value) {
-          return !previous_value;
-        });
-        set_menu([]);
+        set_loading(false);
+        set_menu(menu_data);
       })
       .catch(function (error) {
         console.warn(error);
@@ -28,7 +26,7 @@ const IceCreamMenu = function () {
     <section>
       <h2>Rock your taste buds with one of these!</h2>
       <ul>
-        { menu && menu.length === 0 && <li><p>No Menu Avaible today.</p></li> }
+        { menu && menu.length === 0 && <li><p>No Menu Available today.</p></li> }
         { menu && menu.length > 0 &&  
           menu.map(item => {
             return (
