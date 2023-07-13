@@ -1,0 +1,9 @@
+.header {
+  display: flex;
+  padding: 10px 0 10px 0;
+  vertical-align: middle;
+}
+
+.header__logo {
+  height: 36px;
+}
