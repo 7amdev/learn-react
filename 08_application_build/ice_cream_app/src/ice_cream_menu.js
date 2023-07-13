@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './styles/component.css';
 
 const IceCreamMenu = function () {
   const [menu, set_menu] = useState(undefined);
@@ -27,7 +28,7 @@ const IceCreamMenu = function () {
         set_loading(false);
         set_menu([]);
         clearInterval(interval);
-        
+
         console.warn(error);
       });
 
@@ -48,11 +49,11 @@ const IceCreamMenu = function () {
           menu.map(item => {
             return (
               <li key={item.id.toString()}>
-                <section>
-                  <img src={`/ice_cream_images/ice_cream_${item.id}.jpg`} loading="lazy" />
-                  <h3>{ item.ice_cream.name }</h3>
-                  <p>{`$${item.price} · ${item.quantity} in stock`}</p>
-                  <p>{ item.description }</p>
+                <section className="card">
+                  <img className="card__img" src={`/ice_cream_images/ice_cream_${item.id}.jpg`} loading="lazy" />
+                  <h3 className="card__title">{ item.ice_cream.name }</h3>
+                  <p className="card__info-details">{`$${item.price} · ${item.quantity} in stock`}</p>
+                  <p className="card__description">{ item.description }</p>
                 </section>
               </li>
             );

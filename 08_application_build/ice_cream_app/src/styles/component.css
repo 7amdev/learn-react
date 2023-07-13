@@ -1,0 +1,23 @@
+.card {
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+.card__img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card__title {
+
+}
+
+.card__info-details {
+
+}
+
+.card__description {
+
+}
