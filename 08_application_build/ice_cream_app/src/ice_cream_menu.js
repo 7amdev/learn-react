@@ -28,7 +28,7 @@ const IceCreamMenu = function () {
         set_loading(false);
         set_menu([]);
         clearInterval(interval);
-
+        
         console.warn(error);
       });
 
@@ -39,21 +39,28 @@ const IceCreamMenu = function () {
   }, []);
 
   return (
-    <section>
+    <section className="menu">
       <h2>Rock your taste buds with one of these!</h2>
       { loading && <p>Loading menu, please wait.</p> }
       { menu && menu.length === 0 && <p>No Menu Available today.</p> }
-      <ul>
+      <ul className="list-group list-group--flush">
         
         { menu && menu.length > 0 &&  
           menu.map(item => {
             return (
-              <li key={item.id.toString()}>
+              <li className="list-group__item" key={item.id.toString()}>
                 <section className="card">
                   <img className="card__img" src={`/ice_cream_images/ice_cream_${item.id}.jpg`} loading="lazy" />
-                  <h3 className="card__title">{ item.ice_cream.name }</h3>
-                  <p className="card__info-details">{`$${item.price} · ${item.quantity} in stock`}</p>
-                  <p className="card__description">{ item.description }</p>
+                  <div className="card__body">
+                    <h3 className="card__title">{ item.ice_cream.name }</h3>                    
+                    <div className="card__group--inline">
+                      <p className="card__price">{`$${item.price}`}</p>
+                      <span className="card__dot">{` · `}</span>
+                      { item.quantity == 0 && <p className="card__quantity text-red">{`Currently out of stock`}</p>}
+                      { item.quantity > 0  && <p className="card__quantity text-green">{`${item.quantity} in stock`}</p>}
+                    </div>
+                    <p className="card__description">{ item.description }</p>
+                  </div>
                 </section>
               </li>
             );
