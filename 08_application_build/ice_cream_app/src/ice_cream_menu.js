@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './styles/component.css';
 
 const IceCreamMenu = function () {
@@ -6,14 +6,23 @@ const IceCreamMenu = function () {
   const [loading, set_loading] = useState(false);
 
   useEffect(function () {
+    const abort_controller = new AbortController();
+    const request = new Request('/api/stock?include=ice-creams', {
+      method: 'GET',
+      signal: abort_controller.signal
+    });
     const interval = setInterval(function () {
       set_loading(true);
     }, 400);
 
-    fetch('/api/stock?include=ice-creams')
+    fetch(request)
       .then(function (response) {
         if (!response.ok) {
-          throw new Error("Error: failed to load resources from the server");
+          throw new Error(
+            'Error: failed to load resources from the server', {
+              cause: { response }
+            }
+          );
         } 
 
         return response.json();
@@ -28,13 +37,24 @@ const IceCreamMenu = function () {
         set_loading(false);
         set_menu([]);
         clearInterval(interval);
-        
+
+        if (error.cause && error.cause.response && error.cause.response.status) {
+          switch (error.cause.response.status) {
+            case 400: break;
+            case 401: break;
+            case 404: break;
+            case 500: break;
+          }
+        }
+
         console.warn(error);
       });
 
       return function () {
+        console.log(abort_controller);
         set_loading(false);
         clearInterval(interval);
+        abort_controller.abort();
       };
   }, []);
 
