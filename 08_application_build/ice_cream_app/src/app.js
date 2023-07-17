@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header       from "./header";
 import Footer       from "./footer";
@@ -10,11 +11,13 @@ function App() {
   
 
   return (
-    <>
+    <Router>
       <Header />
-        <IceCreamMenu />
+        <Routes>
+          <Route path="/" element={ <IceCreamMenu /> } />
+        </Routes>
       <Footer />
-    </>
+    </Router>
   );
 }
 
