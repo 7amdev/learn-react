@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
+import { Link } from "react-router-dom";
 import './styles/component.css';
 
 const IceCreamMenu = function () {
   const [menu, set_menu] = useState(undefined);
   const [loading, set_loading] = useState(false);
+  const CARD_EVENTS = Object.freeze({ click: 'click', keyup: 'keyup' });
 
   useEffect(function () {
     const abort_controller = new AbortController();
@@ -58,6 +60,16 @@ const IceCreamMenu = function () {
       };
   }, []);
 
+  const on_card_click_handler = function (e) {
+    if (!(e.type in CARD_EVENTS)) return; 
+    if (e.type === 'keyup' && e.which != 13) return; 
+    
+    console.log(e.type);
+    console.log(e.which);
+    console.log(e.target);
+
+  };
+
   return (
     <main>
       <h2>Rock your taste buds with one of these!</h2>
@@ -69,10 +81,16 @@ const IceCreamMenu = function () {
           menu.map(item => {
             return (
               <li className="list-group__item" key={item.id.toString()}>
-                <section className="card">
+                <section 
+                  className="card" 
+                  tabIndex={0} 
+                  onClick={on_card_click_handler}
+                  onKeyUp={on_card_click_handler} >
                   <img className="card__img" src={`/ice_cream_images/ice_cream_${item.id}.jpg`} loading="lazy" />
                   <div className="card__body">
-                    <h3 className="card__title">{ item.ice_cream.name }</h3>                    
+                    <h3 className="card__title">
+                      <Link to={`/menu-items/${item.id}`} >{ item.ice_cream.name }</Link>
+                      </h3>                    
                     <div className="card__group--inline">
                       <p className="card__price">{`$${item.price}`}</p>
                       <span className="card__dot">{` · `}</span>

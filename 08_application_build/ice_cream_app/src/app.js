@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Header       from "./header";
-import Footer       from "./footer";
-import IceCreamMenu from "./ice_cream_menu";
+import Header           from "./header";
+import Footer           from "./footer";
+import IceCreamMenu     from "./ice_cream_menu";
+import MenuItemEdit from './menu_item_edit';
 
 import './styles/app.css';
 
 function App() {
-  
-
   return (
     <Router>
       <Header />
         <Routes>
           <Route path="/" element={ <IceCreamMenu /> } />
+          <Route path="/menu-items/:id" element={ <MenuItemEdit /> } />
         </Routes>
       <Footer />
     </Router>
