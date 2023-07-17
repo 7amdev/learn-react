@@ -59,7 +59,7 @@ const IceCreamMenu = function () {
   }, []);
 
   return (
-    <section className="menu">
+    <main>
       <h2>Rock your taste buds with one of these!</h2>
       { loading && <p>Loading menu, please wait.</p> }
       { menu && menu.length === 0 && <p>No Menu Available today.</p> }
@@ -87,7 +87,7 @@ const IceCreamMenu = function () {
           })
         }
       </ul>
-    </section>
+    </main>
   );
 };
 

@@ -12,9 +12,7 @@ function App() {
   return (
     <>
       <Header />
-        <main>
-          <IceCreamMenu />
-        </main>
+        <IceCreamMenu />
       <Footer />
     </>
   );
