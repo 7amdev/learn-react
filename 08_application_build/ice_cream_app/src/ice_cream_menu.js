@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Helmet from "react-helmet";
 import './styles/component.css';
 
 const IceCreamMenu = function () {
@@ -70,6 +71,11 @@ const IceCreamMenu = function () {
 
   return (
     <main>
+      <Helmet>
+        <title>
+          List of ice cream  flavors | Ice Cream App
+        </title>
+      </Helmet>
       <h2>Rock your taste buds with one of these!</h2>
       { loading && <p>Loading menu, please wait.</p> }
       { menu && menu.length === 0 && <p>No Menu Available today.</p> }
