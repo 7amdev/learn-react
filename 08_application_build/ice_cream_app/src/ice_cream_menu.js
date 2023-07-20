@@ -1,10 +1,11 @@
 import React, { useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './styles/component.css';
 
 const IceCreamMenu = function () {
-  const [menu, set_menu] = useState(undefined);
-  const [loading, set_loading] = useState(false);
+  const [menu, set_menu]        = useState(undefined);
+  const [loading, set_loading]  = useState(false);
+  const navigate                = useNavigate();
   const CARD_EVENTS = Object.freeze({ click: 'click', keyup: 'keyup' });
 
   useEffect(function () {
@@ -60,14 +61,11 @@ const IceCreamMenu = function () {
       };
   }, []);
 
-  const on_card_click_handler = function (e) {
-    if (!(e.type in CARD_EVENTS)) return; 
-    if (e.type === 'keyup' && e.which != 13) return; 
+  const on_card_click_handler = function (event_type, event_which, card_item_id) {
+    if (!(event_type in CARD_EVENTS)) return; 
+    if (event_type === 'keyup' && event_which != 13) return; 
     
-    console.log(e.type);
-    console.log(e.which);
-    console.log(e.target);
-
+    navigate(`/menu-items/${card_item_id}`);
   };
 
   return (
@@ -84,13 +82,23 @@ const IceCreamMenu = function () {
                 <section 
                   className="card" 
                   tabIndex={0} 
-                  onClick={on_card_click_handler}
-                  onKeyUp={on_card_click_handler} >
+                  onClick={function (e) {
+                    on_card_click_handler(e.type, e.which, item.id);
+                  }}
+                  onKeyUp={function (e) {
+                    on_card_click_handler(e.type, e.which, item.id);
+                  }} >
                   <img className="card__img" src={`/ice_cream_images/ice_cream_${item.id}.jpg`} loading="lazy" />
                   <div className="card__body">
                     <h3 className="card__title">
-                      <Link to={`/menu-items/${item.id}`} >{ item.ice_cream.name }</Link>
-                      </h3>                    
+                      <Link 
+                        to={`/menu-items/${item.id}`} 
+                        onClick={function (e) {
+                          e.stopPropagation();
+                        }}>
+                          { item.ice_cream.name }
+                      </Link>
+                    </h3>                    
                     <div className="card__group--inline">
                       <p className="card__price">{`$${item.price}`}</p>
                       <span className="card__dot">{` · `}</span>
