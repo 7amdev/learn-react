@@ -40,7 +40,6 @@ app.get('/api/ice-creams', function (req, res) {
 // before /api/ice-creams/:id
 
 app.get('/api/ice-creams/available', function (req, res) {
-  console.log('IC available');
   res.send(ice_cream_available(stock_get({})));  
 });
 
@@ -79,7 +78,6 @@ app.get('/api/stock', function (req, res) {
 app.get('/api/stock/:id', function (req, res) {
   const { include } = req.query;
   let options = {};
-  let nested_include;
 
   const include_enum = key_value_map_converter(include);
   
