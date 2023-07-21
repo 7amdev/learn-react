@@ -59,7 +59,7 @@ const stock = [
 
 
 const stock_get = function ({ include_ice_cream, ice_cream_get_by_id_fn }) {
-  let results = JSON.parse(JSON.stringify(stock));
+  let results = structuredClone(stock); // JSON.parse(JSON.stringify(stock));
 
   if (include_ice_cream && ice_cream_get_by_id_fn) {
     for (let i = 0; i < results.length; i++) {
@@ -81,7 +81,7 @@ const stock_get_by_id = function (id, { include_ice_cream, ice_cream_get_by_id_f
   const result = stock.find(function (stock_item) {
     return stock_item.id === id;
   });
-  const result_copy = JSON.parse(JSON.stringify(result));
+  const result_copy = structuredClone(stock);   // JSON.parse(JSON.stringify(result));
 
   if (include_ice_cream && ice_cream_get_by_id_fn) {
     result_copy["ice_cream"] = ice_cream_get_by_id_fn(result_copy.ice_cream_id);
