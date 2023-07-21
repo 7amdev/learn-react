@@ -3,6 +3,12 @@
   margin-bottom: 20px;
 }
 
+.card:focus {
+  outline: 3px solid rgba(0, 0, 0, .6);
+  outline-offset: 3px;
+  border-radius: 9px;  
+}
+
 .card__body {
   padding: 0 10px 0px 10px;
 }
@@ -24,6 +30,10 @@
 }
 
 .card__title {
+
+}
+
+.card__link {
 
 }
 

@@ -99,6 +99,7 @@ const IceCreamMenu = function () {
                     <h3 className="card__title">
                       <Link 
                         to={`/menu-items/${item.id}`} 
+                        className="card__link"
                         onClick={function (e) {
                           e.stopPropagation();
                         }}>
