@@ -54,22 +54,11 @@ p, h1, h2, h3, h4, h5, h6 {
   Anchor style
 */
 a {
-  outline: none;
-  color: hsl(0 0% 0%);
   text-decoration: none;
+  color: inherit;
 }
 
-a:link {
-}
-
-a:visited {
-  color: none;
-}
-
-a:focus,
-a:hover {
-  border-bottom: 2px solid;
-}
-
-a:active {
+ul {
+  list-style: none;
+  padding: 0;
 }
