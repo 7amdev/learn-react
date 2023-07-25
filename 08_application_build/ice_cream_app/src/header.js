@@ -18,7 +18,6 @@ const Header = function () {
               <NavLink 
                 to={'/'}
                 className={function ({isActive}) {
-                  console.log(isActive);
                   if (!isActive) return 'nav__link';
                   return 'nav__link nav__link--active';
                 }}>
@@ -28,10 +27,10 @@ const Header = function () {
             <li>
               <NavLink
               to={'/settings'} 
-                className={function ({isActive}) {
-                  if (!isActive) return 'nav__link';
-                  return 'nav__link nav__link--active';
-                }}>
+              className={function ({isActive}) {
+                if (!isActive) return 'nav__link';
+                return 'nav__link nav__link--active';
+              }}>
                   Settings
               </NavLink>
             </li>
