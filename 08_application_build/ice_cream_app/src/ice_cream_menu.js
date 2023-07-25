@@ -24,7 +24,7 @@ const IceCreamMenu = function () {
         if (!response.ok) {
           throw new Error(
             'Error: failed to load resources from the server', {
-              cause: { response }
+              cause: response 
             }
           );
         } 
@@ -42,8 +42,8 @@ const IceCreamMenu = function () {
         set_menu([]);
         clearInterval(interval);
 
-        if (error.cause && error.cause.response && error.cause.response.status) {
-          switch (error.cause.response.status) {
+        if (error.cause && error.cause.status) {
+          switch (error.cause.status) {
             case 400: break;
             case 401: break;
             case 404: break;
@@ -55,7 +55,6 @@ const IceCreamMenu = function () {
       });
 
       return function () {
-        console.log(abort_controller);
         set_loading(false);
         clearInterval(interval);
         abort_controller.abort();
