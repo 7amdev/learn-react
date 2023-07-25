@@ -44,7 +44,7 @@ const stock = [
     ice_cream_id : 2,
     in_stock: true,
     quantity: 11,
-    price: 129,      //   151 / 100 = 1.51
+    price: 129,      //   129 / 100 = 1.29
     description: 'Nunc pulvinar suscipit libero in dictum. Class aptent taciti sociosqu ad litora torquent.'
   },
   {
@@ -52,7 +52,7 @@ const stock = [
     ice_cream_id : 11,
     in_stock: true,
     quantity: 50,
-    price: 219,      //   219 / 100 = 1.51
+    price: 219,      //   219 / 100 = 2.19
     description: 'Donec volutpat lobortis enim. Sed lobortis est vel diam auctor iaculis. Nunc arcu.'
   },
 ];
@@ -81,7 +81,10 @@ const stock_get_by_id = function (id, { include_ice_cream, ice_cream_get_by_id_f
   const result = stock.find(function (stock_item) {
     return stock_item.id === id;
   });
-  const result_copy = structuredClone(stock);   // JSON.parse(JSON.stringify(result));
+
+  if (!result) return undefined;
+
+  const result_copy = structuredClone(result);   // JSON.parse(JSON.stringify(result));
 
   if (include_ice_cream && ice_cream_get_by_id_fn) {
     result_copy["ice_cream"] = ice_cream_get_by_id_fn(result_copy.ice_cream_id);
