@@ -57,9 +57,9 @@ app.get('/api/ice-creams/:id', function (req, res) {
 });
 
 app.get('/api/stock', function (req, res) {
-  const { include } = req.query;  
-  const include_enum = key_value_map_converter(include);
-  let options = {};
+  const { include }   = req.query;  
+  const include_enum  = key_value_map_converter(include);
+  let options         = {};
 
   if (include_enum && include_enum[STOCK_INCLUDE.ICE_CREAMS]) {
     options.include_ice_cream       = true;
@@ -81,13 +81,14 @@ app.get('/api/stock/:id', function (req, res) {
 
   const include_enum = key_value_map_converter(include);
   
+  
   if (include_enum && include_enum[STOCK_INCLUDE.ICE_CREAMS]) {
     options.include_ice_cream      = true;
     options.ice_cream_get_by_id_fn = ice_cream_get_by_id; // COMPOSITION
   } 
-  
-  const stock_item = stock_get_by_id(parseInt(req.params.id, 10), options);
 
+  const stock_item = stock_get_by_id(parseInt(req.params.id, 10), options);
+  
   if (!stock_item) {
     res.status(404).send("Ice Cream not found");  
     return;
