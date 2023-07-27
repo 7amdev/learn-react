@@ -67,9 +67,36 @@
 }
 
 
+/** From ***********/
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
+.form__title {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
 
+.form__description {
+  color:rgba(0, 0, 0, .8);
+}
 
+.form__label {
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.form__submit {
+  margin-top: 20px;
+  padding: 5px 20px;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
 
 
 
