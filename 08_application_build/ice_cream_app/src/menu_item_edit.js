@@ -9,8 +9,8 @@ import { Helmet } from "react-helmet";
 const INITIAL_STATE = {
   id: '', 
   in_stock: false,
-  price: 0,
-  quantity: 0,
+  price: '0.00',
+  quantity: '0',
   ice_cream: { name: '' },
   description: ''
 };
@@ -133,12 +133,11 @@ const MenuItemEdit = function () {
         </title>
       </Helmet>
       <h2>Edit Menu Item Page</h2>
+      <dl>
+        <dt className="form__title">{ menu_item.ice_cream.name }</dt>
+        <dd className="form__description">{ menu_item.description }</dd>
+      </dl>
       <form className="form" onSubmit={on_form_submit_handler}>
-        <dl>
-          <dt className="form__title">{ menu_item.ice_cream.name }</dt>
-          <dd className="form__description">{ menu_item.description }</dd>
-        </dl>
-
         <label 
           htmlFor={input_uid.in_stock} 
           className="form__label">
@@ -174,12 +173,12 @@ const MenuItemEdit = function () {
           name="quantity" 
           value={menu_item.quantity}
           onChange={on_change_handler}>
-          <option>0</option>
-          <option>10</option>
-          <option>20</option>
-          <option>30</option>
-          <option>40</option>
-          <option>50</option>
+          <option value="0">0</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
         </select>
 
         <input className="form__submit" type="submit" value={"Save"}/>
