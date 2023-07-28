@@ -180,6 +180,7 @@ const MenuItemEdit = function () {
       })
       .then(function (response_data) {
         console.log(response_data);
+        navigate('/');
       })
       .catch(function (error) {
         console.warn(error);
