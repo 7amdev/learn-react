@@ -57,7 +57,9 @@ const stock = [
   },
 ];
 
-
+// Todo
+// [] return error object
+// [] implement filter - {price, name} = req.query
 const stock_get = function ({ include_ice_cream, ice_cream_get_by_id_fn }) {
   let results = structuredClone(stock); // JSON.parse(JSON.stringify(stock));
 
@@ -82,7 +84,7 @@ const stock_get_by_id = function (id, { include_ice_cream, ice_cream_get_by_id_f
     return stock_item.id === id;
   });
 
-  if (!result) return undefined;
+  if (!result) return { error: 'Menu Item not found.' };
 
   const result_copy = structuredClone(result);   // JSON.parse(JSON.stringify(result));
 
@@ -108,6 +110,35 @@ const stock_add = function (new_entry) {
   return new_entry; 
 };
 
+const stock_update = function (id, data) {
+  const {
+    in_stock, 
+    price, 
+    quantity, 
+    description
+  } = data;    
+
+  const index = stock.findIndex(function (stock_item) {
+    return stock_item.id === id;
+  });
+
+  if (index === -1) {
+    return { error: "Menu Item not found." };
+  }
+
+  const menu_item_old = stock[index];
+
+  stock[index] = {
+    ...stock[index],
+    in_stock,
+    price: price * 100,
+    quantity,
+    description
+  };
+
+  return { before: menu_item_old, after: stock[index] };
+}
+
 const stock_remove = function (stock_item_id) {
   const item_index = stock.findIndex(function (item) {
     return item.id === parseInt(stock_item_id, 10);
@@ -124,5 +155,6 @@ module.exports = {
   stock_get,
   stock_get_by_id,
   stock_add,
+  stock_update,
   stock_remove
 };

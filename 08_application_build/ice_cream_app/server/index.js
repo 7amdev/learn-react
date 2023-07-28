@@ -9,6 +9,7 @@ const {
 const { 
   stock_get, 
   stock_add, 
+  stock_update,
   stock_remove, 
   stock_get_by_id
 } = require('./stock');
@@ -22,12 +23,19 @@ const app = express();
 const key_value_map_converter = function (value_string) {
   if (!value_string) return {};
 
-  return value_string.split(',').reduce(function (previous_value, current_value) {
-    return {
-      ...previous_value,
-      [current_value]: current_value
-    };
-  }, {});
+  return ( 
+    value_string
+      .split(',')
+      .reduce(
+        function (previous_value, current_value) {
+          return {
+            ...previous_value,
+            [current_value]: current_value
+          };
+        }, 
+        {}
+      )
+  );
 };
 
 app.use(bodyParser.json());
@@ -76,25 +84,23 @@ app.get('/api/stock', function (req, res) {
 });
 
 app.get('/api/stock/:id', function (req, res) {
-  const { include } = req.query;
-  let options = {};
-
-  const include_enum = key_value_map_converter(include);
-  
-  
+  const { include }   = req.query;
+  const { id }        = req.params;
+  const include_enum  = key_value_map_converter(include);
+  let options         = {};
+   
   if (include_enum && include_enum[STOCK_INCLUDE.ICE_CREAMS]) {
     options.include_ice_cream      = true;
     options.ice_cream_get_by_id_fn = ice_cream_get_by_id; // COMPOSITION
   } 
 
-  const stock_item = stock_get_by_id(parseInt(req.params.id, 10), options);
+  const result = stock_get_by_id(parseInt(id, 10), options);
   
-  if (!stock_item) {
-    res.status(404).send("Ice Cream not found");  
-    return;
+  if (result.error) {
+    res.status(404);  
   } 
 
-  res.status(200).send(stock_item);  
+  res.send(result);  
 });
 
 app.post('/api/stock', function (req, res) {
@@ -109,15 +115,14 @@ app.post('/api/stock', function (req, res) {
 });
 
 app.put('/api/stock/:id', function (req, res) {
-  const item_found = stock_get().find(function (stock_item) {
-    return stock_item === req.params.id;
-  });
+  const { id }  = req.params;
+  const payload = req.body;
 
-  if (!item_found) {
-    return res.status(404).json({ error: "Item not found" });
-  }
+  const result = stock_update(parseInt(id, 10), payload);
 
-  res.send(item_found);
+  if (result.error) res.status(404); 
+
+  res.send(result);
 });
 
 app.delete('/api/stock/:id', function (req, res) {
