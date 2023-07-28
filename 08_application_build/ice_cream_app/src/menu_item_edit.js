@@ -141,7 +141,58 @@ const MenuItemEdit = function () {
 
   const on_form_submit_handler = function (e) {
     e.preventDefault();
-    console.log(menu_item);
+
+    const {
+      id, 
+      ice_cream_id, 
+      in_stock, 
+      price, 
+      quantity, 
+      description
+    } = menu_item;    
+
+    const payload = JSON.stringify({
+      id,
+      ice_cream_id,
+      in_stock,
+      price: parseFloat(price),
+      quantity: parseInt(quantity, 10),
+      description
+    });
+
+    const http_request = new Request(`/api/stock/${id}`, {
+      method: 'PUT',
+      body: payload,
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+    fetch(http_request)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('Error: response not ok...', {
+            cause: response
+          })
+        }
+
+        return response.json();
+      })
+      .then(function (response_data) {
+        console.log(response_data);
+      })
+      .catch(function (error) {
+        console.warn(error);
+        if (error.cause && error.cause.status) {
+          switch (error.cause.status) {
+            case 400: break;
+            case 401: break;
+            case 404: break;
+            case 500: break;
+          }
+        } 
+      });
+    
   };
 
   return (
