@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet";
+
 // todo
 // [] fetch data from the server
 // [] create a form
@@ -101,23 +102,39 @@ const MenuItemEdit = function () {
 
   const on_change_handler = function (e) {
     let new_menu_item = {...menu_item};
-    let value = e.target.value;
+    let value         = e.target.value;
 
     if (e.target.type === 'checkbox') {
       value = e.target.checked;
     }
   
-    if (e.target.name === 'in_stock' && value === false ) {
-      new_menu_item = {
-        ...new_menu_item,
-        quantity: '0'
-      };
-    }
-
     new_menu_item = {
       ...new_menu_item,
       [e.target.name]: value
     };
+
+    if (e.target.name === 'in_stock') {
+      if (value === false) {
+        new_menu_item = {
+          ...new_menu_item,
+          quantity: '0'
+        };
+      }
+    }
+
+    if (e.target.name === 'quantity') {
+      if (value === '0') {
+        new_menu_item = {
+          ...new_menu_item,
+          in_stock: false
+        };
+      } else {
+        new_menu_item = {
+          ...new_menu_item,
+          in_stock: true
+        };
+      }
+    }
 
     set_menu_item(new_menu_item);
   };
@@ -126,8 +143,6 @@ const MenuItemEdit = function () {
     e.preventDefault();
     console.log(menu_item);
   };
-
-  console.log(input_uid);
 
   return (
     <main>
