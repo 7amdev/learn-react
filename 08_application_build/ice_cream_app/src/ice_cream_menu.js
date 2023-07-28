@@ -106,7 +106,7 @@ const IceCreamMenu = function () {
                       </Link>
                     </h3>                    
                     <div className="card__group--inline">
-                      <p className="card__price">{`$${item.price}`}</p>
+                      <p className="card__price">{`$${item.price.toFixed(2)}`}</p>
                       <span className="card__dot">{` · `}</span>
                       { item.quantity == 0 && <p className="card__quantity text-red">{`Currently out of stock`}</p>}
                       { item.quantity > 0  && <p className="card__quantity text-green">{`${item.quantity} in stock`}</p>}
