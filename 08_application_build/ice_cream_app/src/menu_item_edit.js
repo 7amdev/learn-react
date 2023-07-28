@@ -31,11 +31,12 @@ const generate_uid = function () {
 } 
 
 const MenuItemEdit = function () {
-  const [menu_item, set_menu_item] = useState(INITIAL_STATE);
-  const navigate = useNavigate();
+  const [menu_item, set_menu_item]    = useState(INITIAL_STATE);
+  const [is_loading, set_is_loading]  = useState(undefined);
+  const navigate                      = useNavigate();
   const { current: abort_controller } = useRef(new AbortController());
-  const { id } = useParams();
-  let   {current: input_uid} = useRef({});
+  const { id }                        = useParams();
+  let   {current: input_uid}          = useRef({});
 
   useEffect(function () {
     // On desmount run the function bellow
@@ -49,6 +50,8 @@ const MenuItemEdit = function () {
       method: 'GET',
       signal: abort_controller.signal
     });
+
+    set_is_loading(true);
 
     fetch(request)
       .then(function (response) {
@@ -71,6 +74,7 @@ const MenuItemEdit = function () {
           price: data.price.toFixed(2),
           quantity: data.quantity.toString()
         });
+        set_is_loading(false);
       })
       .catch(function (error) {
         // console.warn(error);
@@ -133,56 +137,63 @@ const MenuItemEdit = function () {
         </title>
       </Helmet>
       <h2>Edit Menu Item Page</h2>
-      <dl>
-        <dt className="form__title">{ menu_item.ice_cream.name }</dt>
-        <dd className="form__description">{ menu_item.description }</dd>
-      </dl>
-      <form className="form" onSubmit={on_form_submit_handler}>
-        <label 
-          htmlFor={input_uid.in_stock} 
-          className="form__label">
-            In stock? 
-        </label>
-        <input 
-          id={input_uid.in_stock}
-          type="checkbox"
-          name="in_stock"
-          checked={menu_item.in_stock}
-          onChange={on_change_handler}/>
+      { is_loading === true && <p>Loading menu item, please wait...</p> }
+      { is_loading === false 
+        && (
+          <dl>
+            <dt className="form__title">{ menu_item.ice_cream.name }</dt>
+            <dd className="form__description">{ menu_item.description }</dd>
+          </dl>
+        )
+      }
+      { is_loading === false && 
+        <form className="form" onSubmit={on_form_submit_handler}>
+          <label 
+            htmlFor={input_uid.in_stock} 
+            className="form__label">
+              In stock? 
+          </label>
+          <input 
+            id={input_uid.in_stock}
+            type="checkbox"
+            name="in_stock"
+            checked={menu_item.in_stock}
+            onChange={on_change_handler}/>
 
-        <label 
-          htmlFor={input_uid.price} 
-          className="form__label">
-            Price: 
-        </label>
-        <input 
-          id={input_uid.price}
-          type="number"
-          name="price"
-          value={menu_item.price}
-          step={".01"}
-          onChange={on_change_handler}/>
+          <label 
+            htmlFor={input_uid.price} 
+            className="form__label">
+              Price: 
+          </label>
+          <input 
+            id={input_uid.price}
+            type="number"
+            name="price"
+            value={menu_item.price}
+            step={".01"}
+            onChange={on_change_handler}/>
 
-        <label 
-          htmlFor={input_uid.quantity} 
-          className="form__label">
-            Quantity: 
-        </label>
-        <select 
-          id={input_uid.quantity}
-          name="quantity" 
-          value={menu_item.quantity}
-          onChange={on_change_handler}>
-          <option value="0">0</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="30">30</option>
-          <option value="40">40</option>
-          <option value="50">50</option>
-        </select>
+          <label 
+            htmlFor={input_uid.quantity} 
+            className="form__label">
+              Quantity: 
+          </label>
+          <select 
+            id={input_uid.quantity}
+            name="quantity" 
+            value={menu_item.quantity}
+            onChange={on_change_handler}>
+            <option value="0">0</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select>
 
-        <input className="form__submit" type="submit" value={"Save"}/>
-      </form>
+          <input className="form__submit" type="submit" value={"Save"}/>
+        </form>
+      }
     </main>
   );
 };
