@@ -11,7 +11,7 @@ const IceCreamMenu = function () {
 
   useEffect(function () {
     const abort_controller = new AbortController();
-    const request = new Request('/api/stock?include=ice-creams', {
+    const request = new Request('/api/menu?include=ice-creams', {
       method: 'GET',
       signal: abort_controller.signal
     });

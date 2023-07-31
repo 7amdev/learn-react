@@ -47,7 +47,7 @@ const MenuItemEdit = function () {
   }, []);
 
   useEffect(function () {
-    const request = new Request(`/api/stock/${id}?include=ice-creams `, {
+    const request = new Request(`/api/menu/${id}?include=ice-creams `, {
       method: 'GET',
       signal: abort_controller.signal
     });
@@ -160,7 +160,7 @@ const MenuItemEdit = function () {
       description
     });
 
-    const http_request = new Request(`/api/stock/${id}`, {
+    const http_request = new Request(`/api/menu/${id}`, {
       method: 'PUT',
       body: payload,
       headers: {
