@@ -7,15 +7,15 @@ const {
   ice_cream_get 
 } = require('./ice_cream');
 const { 
-  stock_get, 
-  stock_add, 
-  stock_update,
-  stock_remove, 
-  stock_get_by_id
-} = require('./stock');
+  menu_get, 
+  menu_add, 
+  menu_update,
+  menu_remove, 
+  menu_get_by_id
+} = require('./menu');
 
 const PORT = 5000;
-const STOCK_INCLUDE = {
+const MENU_INCLUDE = {
   ICE_CREAMS: "ice-creams"
 };
 const app = express();
@@ -48,7 +48,7 @@ app.get('/api/ice-creams', function (req, res) {
 // before /api/ice-creams/:id
 
 app.get('/api/ice-creams/available', function (req, res) {
-  res.send(ice_cream_available(stock_get({})));  
+  res.send(ice_cream_available(menu_get({})));  
 });
 
 app.get('/api/ice-creams/:id', function (req, res) {
@@ -64,17 +64,17 @@ app.get('/api/ice-creams/:id', function (req, res) {
   res.send(result);  
 });
 
-app.get('/api/stock', function (req, res) {
+app.get('/api/menu', function (req, res) {
   const { include }   = req.query;  
   const include_enum  = key_value_map_converter(include);
   let options         = {};
 
-  if (include_enum && include_enum[STOCK_INCLUDE.ICE_CREAMS]) {
+  if (include_enum && include_enum[MENU_INCLUDE.ICE_CREAMS]) {
     options.include_ice_cream       = true;
     options.ice_cream_get_by_id_fn  = ice_cream_get_by_id;
   } 
 
-  const result = stock_get(options);
+  const result = menu_get(options);
 
   if (!result) {
     return res.status(500).json({error: "An error occurs processing your request"});
@@ -83,18 +83,23 @@ app.get('/api/stock', function (req, res) {
   res.send(result);  
 });
 
-app.get('/api/stock/:id', function (req, res) {
+app.get('/api/menu/:id', function (req, res) {
   const { include }   = req.query;
   const { id }        = req.params;
   const include_enum  = key_value_map_converter(include);
   let options         = {};
    
-  if (include_enum && include_enum[STOCK_INCLUDE.ICE_CREAMS]) {
+  // todo
+  // [] change include_enum
+  // [] redo key_value_map_converter
+  //    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration
+
+  if (include_enum && include_enum[MENU_INCLUDE.ICE_CREAMS]) {
     options.include_ice_cream      = true;
     options.ice_cream_get_by_id_fn = ice_cream_get_by_id; // COMPOSITION
   } 
 
-  const result = stock_get_by_id(parseInt(id, 10), options);
+  const result = menu_get_by_id(parseInt(id, 10), options);
   
   if (result.error) {
     res.status(404);  
@@ -103,30 +108,30 @@ app.get('/api/stock/:id', function (req, res) {
   res.send(result);  
 });
 
-app.post('/api/stock', function (req, res) {
+app.post('/api/menu', function (req, res) {
   const new_entry  = req.body;
-  const stock_item = stock_add(new_entry);
+  const menu_item = menu_add(new_entry);
 
-  if (!stock_item) {
+  if (!menu_item) {
     return res.status(500).json({ error: "Server error: Cannot create a anew entry" });
   }
 
-  res.send(stock_item);
+  res.send(menu_item);
 });
 
-app.put('/api/stock/:id', function (req, res) {
+app.put('/api/menu/:id', function (req, res) {
   const { id }  = req.params;
   const payload = req.body;
 
-  const result = stock_update(parseInt(id, 10), payload);
+  const result = menu_update(parseInt(id, 10), payload);
 
   if (result.error) res.status(404); 
 
   res.send(result);
 });
 
-app.delete('/api/stock/:id', function (req, res) {
-  stock_remove(req.params.id);
+app.delete('/api/menu/:id', function (req, res) {
+  menu_remove(req.params.id);
 
   res.status(204).send();
 });

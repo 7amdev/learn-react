@@ -1,4 +1,4 @@
-const stock = [
+const menu = [
   {
     id: 1, 
     ice_cream_id: 1,
@@ -60,8 +60,8 @@ const stock = [
 // Todo
 // [] return error object
 // [] implement filter - {price, name} = req.query
-const stock_get = function ({ include_ice_cream, ice_cream_get_by_id_fn }) {
-  let results = structuredClone(stock); // JSON.parse(JSON.stringify(stock));
+const menu_get = function ({ include_ice_cream, ice_cream_get_by_id_fn }) {
+  let results = structuredClone(menu); // JSON.parse(JSON.stringify(stock));
 
   if (include_ice_cream && ice_cream_get_by_id_fn) {
     for (let i = 0; i < results.length; i++) {
@@ -79,9 +79,9 @@ const stock_get = function ({ include_ice_cream, ice_cream_get_by_id_fn }) {
   return results;
 };
 
-const stock_get_by_id = function (id, { include_ice_cream, ice_cream_get_by_id_fn }) {
-  const result = stock.find(function (stock_item) {
-    return stock_item.id === id;
+const menu_get_by_id = function (id, { include_ice_cream, ice_cream_get_by_id_fn }) {
+  const result = menu.find(function (menu_item) {
+    return menu_item.id === id;
   });
 
   if (!result) return { error: 'Menu Item not found.' };
@@ -97,20 +97,20 @@ const stock_get_by_id = function (id, { include_ice_cream, ice_cream_get_by_id_f
   return result_copy;
 };
 
-const stock_add = function (new_entry) {
+const menu_add = function (new_entry) {
 
-  new_entry.id = stock.reduce(function (previous_value, current_value) { 
+  new_entry.id = menu.reduce(function (previous_value, current_value) { 
     return current_value.id > previous_value ? current_value.id : previous_value;
    }, 0) + 1;
 
   new_entry.price = Math.floor(parseFloat(new_entry.price) * 100)
 
-  stock.push(new_entry);
+  menu.push(new_entry);
 
   return new_entry; 
 };
 
-const stock_update = function (id, data) {
+const menu_update = function (id, data) {
   const {
     in_stock, 
     price, 
@@ -118,43 +118,43 @@ const stock_update = function (id, data) {
     description
   } = data;    
 
-  const index = stock.findIndex(function (stock_item) {
-    return stock_item.id === id;
+  const index = menu.findIndex(function (menu_item) {
+    return menu_item.id === id;
   });
 
   if (index === -1) {
     return { error: "Menu Item not found." };
   }
 
-  const menu_item_old = stock[index];
+  const menu_item_old = menu[index];
 
-  stock[index] = {
-    ...stock[index],
+  menu[index] = {
+    ...menu[index],
     in_stock,
     price: price * 100,
     quantity,
     description
   };
 
-  return { before: menu_item_old, after: stock[index] };
+  return { before: menu_item_old, after: menu[index] };
 }
 
-const stock_remove = function (stock_item_id) {
-  const item_index = stock.findIndex(function (item) {
-    return item.id === parseInt(stock_item_id, 10);
+const menu_remove = function (menu_item_id) {
+  const item_index = menu.findIndex(function (item) {
+    return item.id === parseInt(menu_item_id, 10);
   });
 
   if (item_index < 0) 
     return [];
 
-  return stock.splice(item_index, 1);
+  return menu.splice(item_index, 1);
 };
 
 
 module.exports = {
-  stock_get,
-  stock_get_by_id,
-  stock_add,
-  stock_update,
-  stock_remove
+  menu_get,
+  menu_get_by_id,
+  menu_add,
+  menu_update,
+  menu_remove
 };
