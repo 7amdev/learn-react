@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet";
-
-// todo
-// [] fetch data from the server
-// [] create a form
-// [] style the page
+import useIds from './useUids';
 
 const INITIAL_STATE = {
   id: '', 
@@ -16,28 +12,17 @@ const INITIAL_STATE = {
   description: ''
 };
 
-const generate_uid = function () {
-  const seed = 'abcdefghijklmnopqrstuvwxyz01234567890!@#$%&-_+=';
-  const upper_bound = seed.length;
-  const lower_bound = 0;
-  const N = 7;
-  let uid = '';
-
-  for (let i = 0; i < N; i += 1) {
-      const seed_idx = Math.random() * (upper_bound - lower_bound) + lower_bound;
-      uid += seed.charAt(seed_idx);
-  }
-
-  return uid;
-} 
-
 const MenuItemEdit = function () {
   const [menu_item, set_menu_item]    = useState(INITIAL_STATE);
   const [is_loading, set_is_loading]  = useState(undefined);
   const navigate                      = useNavigate();
   const { current: abort_controller } = useRef(new AbortController());
   const { id }                        = useParams();
-  let   {current: input_uid}          = useRef({});
+  const [
+    in_stock_uid, 
+    price_uid, 
+    quantity_uid
+  ] = useIds(3)
 
   useEffect(function () {
     // On desmount run the function bellow
@@ -66,10 +51,6 @@ const MenuItemEdit = function () {
         return response.json();
       })
       .then(function (data) {
-        const data_keys = Object.keys(data);
-        for (let i = 0; i < data_keys.length; i++) {
-          input_uid[data_keys[i]] = generate_uid();
-        }
         set_menu_item({
           ...data,
           price: data.price.toFixed(2),
@@ -216,24 +197,24 @@ const MenuItemEdit = function () {
       { is_loading === false && 
         <form className="form" onSubmit={on_form_submit_handler}>
           <label 
-            htmlFor={input_uid.in_stock} 
+            htmlFor={in_stock_uid} 
             className="form__label">
               In stock? 
           </label>
           <input 
-            id={input_uid.in_stock}
+            id={in_stock_uid}
             type="checkbox"
             name="in_stock"
             checked={menu_item.in_stock}
             onChange={on_change_handler}/>
 
           <label 
-            htmlFor={input_uid.price} 
+            htmlFor={price_uid} 
             className="form__label">
               Price: 
           </label>
           <input 
-            id={input_uid.price}
+            id={price_uid}
             type="number"
             name="price"
             value={menu_item.price}
@@ -241,12 +222,12 @@ const MenuItemEdit = function () {
             onChange={on_change_handler}/>
 
           <label 
-            htmlFor={input_uid.quantity} 
+            htmlFor={quantity_uid} 
             className="form__label">
               Quantity: 
           </label>
           <select 
-            id={input_uid.quantity}
+            id={quantity_uid}
             name="quantity" 
             value={menu_item.quantity}
             onChange={on_change_handler}>
