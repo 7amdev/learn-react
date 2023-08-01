@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef} from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Helmet from "react-helmet";
 import './styles/component.css';
 
@@ -7,8 +7,11 @@ const IceCreamMenu = function () {
   const [menu, set_menu]        = useState(undefined);
   const [loading, set_loading]  = useState(false);
   const navigate                = useNavigate();
-  const CARD_EVENTS = Object.freeze({ click: 'click', keyup: 'keyup' });
+  const heading_title           = useRef(null);
+  const location                = useLocation();
+  const CARD_EVENTS             = Object.freeze({ click: 'click', keyup: 'keyup' });
 
+  // On Mount Component
   useEffect(function () {
     const abort_controller = new AbortController();
     const request = new Request('/api/menu?include=ice-creams', {
@@ -61,21 +64,31 @@ const IceCreamMenu = function () {
       };
   }, []);
 
+  useEffect(function () {
+    const title_element = heading_title.current;
+    if (location.state && location.state.heading_title_focus) {
+      title_element.focus();
+    } 
+
+  }, [location.state]);
+
   const on_card_click_handler = function (event_type, event_which, card_item_id) {
     if (!(event_type in CARD_EVENTS)) return; 
     if (event_type === 'keyup' && event_which != 13) return; 
     
-    navigate(`/menu-items/${card_item_id}`);
+    navigate(`/menu-items/${card_item_id}`, {
+      state: { heading_title_focus: true }
+    });
   };
 
   return (
     <main>
       <Helmet>
         <title>
-          List of ice cream  flavors | Ice Cream App
+          List of ice cream flavors | Ice Cream App
         </title>
       </Helmet>
-      <h2>Rock your taste buds with one of these!</h2>
+      <h2 ref={heading_title} tabIndex={"-1"}>Ice Cream Menu</h2>
       { loading && <p>Loading menu, please wait.</p> }
       { menu && menu.length === 0 && <p>No Menu Available today.</p> }
       <ul className="list-group list-group--flush">
@@ -99,6 +112,7 @@ const IceCreamMenu = function () {
                       <Link 
                         to={`/menu-items/${item.id}`} 
                         className="card__link"
+                        state={ { heading_title_focus: true } }
                         onClick={function (e) {
                           e.stopPropagation();
                         }}>

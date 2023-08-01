@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, useLocation } from "react-router-dom"
 import { Helmet } from "react-helmet";
 import useIds from './useUids';
 
@@ -17,7 +17,9 @@ const MenuItemEdit = function () {
   const [is_loading, set_is_loading]  = useState(undefined);
   const navigate                      = useNavigate();
   const { current: abort_controller } = useRef(new AbortController());
+  const heading_title                 = useRef(null);
   const { id }                        = useParams();
+  const location                      = useLocation();
   const [
     in_stock_uid, 
     price_uid, 
@@ -30,6 +32,13 @@ const MenuItemEdit = function () {
       abort_controller.abort();  
     };
   }, []);
+
+  useEffect(function () {
+    const { current: title_element } = heading_title;
+    if (location.state && location.state.heading_title_focus) {
+      title_element.focus();
+    } 
+  }, [location.state]);
 
   useEffect(function () {
     const request = new Request(`/api/menu/${id}?include=ice-creams `, {
@@ -160,8 +169,9 @@ const MenuItemEdit = function () {
         return response.json();
       })
       .then(function (response_data) {
-        console.log(response_data);
-        navigate('/');
+        navigate('/', {
+          state: { heading_title_focus: true }
+        });
       })
       .catch(function (error) {
         console.warn(error);
@@ -181,10 +191,10 @@ const MenuItemEdit = function () {
     <main>
       <Helmet>
         <title>
-          Edit ice cream flavor | Ice Cream App
+          Menu Item | Ice Cream App
         </title>
       </Helmet>
-      <h2>Edit Menu Item Page</h2>
+      <h2 ref={heading_title} tabIndex="-1">Edit Menu Item Page</h2>
       { is_loading === true && <p>Loading menu item, please wait...</p> }
       { is_loading === false 
         && (
@@ -198,6 +208,7 @@ const MenuItemEdit = function () {
         <form className="form" onSubmit={on_form_submit_handler}>
           <label 
             htmlFor={in_stock_uid} 
+            aria-label="in stock"
             className="form__label">
               In stock? 
           </label>

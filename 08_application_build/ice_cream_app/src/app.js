@@ -12,11 +12,11 @@ function App() {
   return (
     <Router>
       <Header />
-        <Routes>
-          <Route path="/" element={ <IceCreamMenu /> } />
-          <Route path="/menu-items/:id" element={ <MenuItemEdit /> } />
-          <Route path="*" element={ <IceCreamMenu /> } />
-        </Routes>
+      <Routes>
+        <Route path="/" element={ <IceCreamMenu /> } />
+        <Route path="/menu-items/:id" element={ <MenuItemEdit /> } />
+        <Route path="*" element={ <IceCreamMenu /> } />
+      </Routes>
       <Footer />
     </Router>
   );

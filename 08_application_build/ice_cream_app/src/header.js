@@ -17,6 +17,7 @@ const Header = function () {
             <li className="nav__list-item">
               <NavLink 
                 to={'/'}
+                state={ { heading_title_focus: true } }
                 className={function ({isActive}) {
                   if (!isActive) return 'nav__link';
                   return 'nav__link nav__link--active';
