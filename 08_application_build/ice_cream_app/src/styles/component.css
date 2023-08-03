@@ -89,6 +89,16 @@
   margin-top: 10px;
 }
 
+.form__error,
+.form__error:focus {
+  color: red;
+  outline-color: red;
+}
+
+.form__error--input {
+  border: 1px solid red;
+}
+
 .form__submit {
   margin-top: 20px;
   padding: 5px 20px;

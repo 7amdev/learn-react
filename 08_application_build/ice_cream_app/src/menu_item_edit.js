@@ -17,6 +17,7 @@ const INITIAL_STATE = {
 const MenuItemEdit = function () {
   const [menu_item, set_menu_item]    = useState(INITIAL_STATE);
   const [is_loading, set_is_loading]  = useState(undefined);
+  const [has_submitted, set_has_submitted] = useState(false);
   const navigate                      = useNavigate();
   const { current: abort_controller } = useRef(new AbortController());
   const heading_title                 = useRef(null);
@@ -144,6 +145,8 @@ const MenuItemEdit = function () {
   const on_form_submit_handler = function (e) {
     e.preventDefault();
 
+    set_has_submitted(true);
+
     if (quantity_validation || price_validation) {
       console.log(quantity_validation);
       console.log(price_validation);
@@ -240,7 +243,12 @@ const MenuItemEdit = function () {
           <label 
             htmlFor={price_uid} 
             className="form__label">
-              Price: 
+              Price 
+              <span 
+                className="form__label--required" 
+                aria-hidden="true">
+                  (*)
+              </span>: 
           </label>
           <input 
             id={price_uid}
@@ -248,7 +256,17 @@ const MenuItemEdit = function () {
             name="price"
             value={menu_item.price}
             step={".01"}
+            className={ 
+              (has_submitted && price_validation) 
+              ? 'form__error form__error--input'
+              : null 
+            }
             onChange={on_change_handler}/>
+          { has_submitted && price_validation && 
+            <div className="form__error">
+              { price_validation }
+            </div>
+          }
 
           <label 
             htmlFor={quantity_uid} 
@@ -259,6 +277,11 @@ const MenuItemEdit = function () {
             id={quantity_uid}
             name="quantity" 
             value={menu_item.quantity}
+            className={ 
+              (has_submitted && quantity_validation) 
+              ? 'form__error form__error--input' 
+              : null 
+            }
             onChange={on_change_handler}>
             <option value="0">0</option>
             <option value="10">10</option>
@@ -267,6 +290,11 @@ const MenuItemEdit = function () {
             <option value="40">40</option>
             <option value="50">50</option>
           </select>
+          { has_submitted && quantity_validation && 
+            <div className="form__error">
+              { quantity_validation }
+            </div>
+          }
 
           <input className="form__submit" type="submit" value={"Save"}/>
         </form>
