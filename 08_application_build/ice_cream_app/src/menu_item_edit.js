@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom"
 import { Helmet } from "react-helmet";
 import useIds from './useUids';
+import { validator_price, validator_quantity } from './validators';
+import useValidation from './useValidation';
 
 const INITIAL_STATE = {
   id: '', 
@@ -24,7 +26,17 @@ const MenuItemEdit = function () {
     in_stock_uid, 
     price_uid, 
     quantity_uid
-  ] = useIds(3)
+  ] = useIds(3);
+
+  const quantity_validation = useValidation(
+    menu_item.quantity, 
+    validator_quantity,
+    menu_item.in_stock
+  );
+  const price_validation = useValidation(
+    menu_item.price,
+    validator_price
+  );
 
   useEffect(function () {
     // On desmount run the function bellow
@@ -131,6 +143,12 @@ const MenuItemEdit = function () {
 
   const on_form_submit_handler = function (e) {
     e.preventDefault();
+
+    if (quantity_validation || price_validation) {
+      console.log(quantity_validation);
+      console.log(price_validation);
+      return;
+    }
 
     const {
       id, 
