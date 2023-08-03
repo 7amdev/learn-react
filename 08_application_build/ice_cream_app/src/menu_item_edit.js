@@ -188,7 +188,7 @@ const MenuItemEdit = function () {
   };
 
   return (
-    <main>
+    <main id="main" tabIndex={"-1"}>
       <Helmet>
         <title>
           Menu Item | Ice Cream App

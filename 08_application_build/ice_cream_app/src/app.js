@@ -11,6 +11,7 @@ import './styles/app.css';
 function App() {
   return (
     <Router>
+      <a href="#main" className="skip-content">Skip to content</a>
       <Header />
       <Routes>
         <Route path="/" element={ <IceCreamMenu /> } />

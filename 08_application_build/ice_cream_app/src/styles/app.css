@@ -62,3 +62,22 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+.skip-content {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -40px;
+  color: white;
+  background-color: rgba(0, 0, 0, .7);
+  border: none;
+  padding: 5px 9px;
+  font-weight: 500;
+  transition: top .3s ease-out;
+}
+
+.skip-content:focus {
+  top: 0;
+  text-decoration: underline;
+  outline-color: transparent;
+}

@@ -82,7 +82,7 @@ const IceCreamMenu = function () {
   };
 
   return (
-    <main>
+    <main id="main" tabIndex="-1">
       <Helmet>
         <title>
           List of ice cream flavors | Ice Cream App
