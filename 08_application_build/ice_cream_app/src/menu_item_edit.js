@@ -21,23 +21,32 @@ const MenuItemEdit = function () {
   const navigate                      = useNavigate();
   const { current: abort_controller } = useRef(new AbortController());
   const heading_title                 = useRef(null);
+  const form_element                  = useRef(null);
   const { id }                        = useParams();
   const location                      = useLocation();
   const [
     in_stock_uid, 
-    price_uid, 
-    quantity_uid
-  ] = useIds(3);
+    price_uid,
+    price_error_uid,
+    quantity_uid,
+    quantity_error_uid
+  ] = useIds(5);
 
-  const quantity_validation = useValidation(
-    menu_item.quantity, 
-    validator_quantity,
-    menu_item.in_stock
-  );
-  const price_validation = useValidation(
-    menu_item.price,
-    validator_price
-  );
+  const [price_validation, price_error_props] = useValidation({
+    value         : menu_item.price, 
+    validator_fn  : validator_price, 
+    is_required   : true,
+    error_id      : price_error_uid,
+    show_error    : has_submitted
+  });
+  const [quantity_validation, quantity_error_props] = useValidation({
+    value           : menu_item.quantity, 
+    validator_fn    : validator_quantity, 
+    compare_value   : menu_item.in_stock,
+    is_required     : false,
+    error_id        : quantity_error_uid,
+    show_error      : has_submitted
+  });
 
   useEffect(function () {
     // On desmount run the function bellow
@@ -148,8 +157,13 @@ const MenuItemEdit = function () {
     set_has_submitted(true);
 
     if (quantity_validation || price_validation) {
-      console.log(quantity_validation);
-      console.log(price_validation);
+      setTimeout(function () {
+        const error_element = form_element.current.querySelector('[aria-invalid*="true"]');
+        if (error_element) {
+          error_element.focus();
+        }
+      }, 0);
+
       return;
     }
 
@@ -226,7 +240,7 @@ const MenuItemEdit = function () {
         )
       }
       { is_loading === false && 
-        <form className="form" onSubmit={on_form_submit_handler}>
+        <form ref={form_element} className="form" onSubmit={on_form_submit_handler} noValidate>
           <label 
             htmlFor={in_stock_uid} 
             aria-label="in stock"
@@ -261,10 +275,12 @@ const MenuItemEdit = function () {
               ? 'form__error form__error--input'
               : null 
             }
-            onChange={on_change_handler}/>
+            onChange={on_change_handler}
+            {...price_error_props}
+          />
           { has_submitted && price_validation && 
-            <div className="form__error">
-              { price_validation }
+            <div className="form__error"> 
+              <p id={price_error_uid}>{ price_validation }</p>
             </div>
           }
 
@@ -282,7 +298,9 @@ const MenuItemEdit = function () {
               ? 'form__error form__error--input' 
               : null 
             }
-            onChange={on_change_handler}>
+            onChange={on_change_handler}
+            {...quantity_error_props}
+          >
             <option value="0">0</option>
             <option value="10">10</option>
             <option value="20">20</option>
@@ -292,7 +310,7 @@ const MenuItemEdit = function () {
           </select>
           { has_submitted && quantity_validation && 
             <div className="form__error">
-              { quantity_validation }
+              <p id={quantity_error_uid}>{ quantity_validation }</p>
             </div>
           }
 
