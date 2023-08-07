@@ -15,15 +15,16 @@ const INITIAL_STATE = {
 };
 
 const MenuItemEdit = function () {
-  const [menu_item, set_menu_item]    = useState(INITIAL_STATE);
-  const [is_loading, set_is_loading]  = useState(undefined);
-  const [has_submitted, set_has_submitted] = useState(false);
-  const navigate                      = useNavigate();
-  const { current: abort_controller } = useRef(new AbortController());
-  const heading_title                 = useRef(null);
-  const form_element                  = useRef(null);
-  const { id }                        = useParams();
-  const location                      = useLocation();
+  const [menu_item, set_menu_item]          = useState(INITIAL_STATE);
+  const [is_loading, set_is_loading]        = useState(undefined);
+  const [is_submitting, set_is_submitting]  = useState(false);
+  const [has_submitted, set_has_submitted]  = useState(false);
+  const navigate                            = useNavigate();
+  const { current: abort_controller }       = useRef(new AbortController());
+  const heading_title                       = useRef(null);
+  const form_element                        = useRef(null);
+  const { id }                              = useParams();
+  const location                            = useLocation();
   const [
     in_stock_uid, 
     price_uid,
@@ -193,6 +194,8 @@ const MenuItemEdit = function () {
       }
     });
 
+    set_is_submitting(true);
+
     fetch(http_request)
       .then(function (response) {
         if (!response.ok) {
@@ -204,11 +207,13 @@ const MenuItemEdit = function () {
         return response.json();
       })
       .then(function (response_data) {
+        set_is_submitting(false);
         navigate('/', {
           state: { heading_title_focus: true }
         });
       })
       .catch(function (error) {
+        set_is_submitting(false);
         console.warn(error);
         if (error.cause && error.cause.status) {
           switch (error.cause.status) {
@@ -221,7 +226,7 @@ const MenuItemEdit = function () {
       });
     
   };
-
+  
   return (
     <main id="main" tabIndex={"-1"}>
       <Helmet>
@@ -314,7 +319,7 @@ const MenuItemEdit = function () {
             </div>
           }
 
-          <input className="form__submit" type="submit" value={"Save"}/>
+          <input type="submit" disabled={is_submitting} className="form__submit" value={"Save"}/>
         </form>
       }
     </main>
