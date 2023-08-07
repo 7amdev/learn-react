@@ -131,9 +131,11 @@ app.put('/api/menu/:id', function (req, res) {
 });
 
 app.delete('/api/menu/:id', function (req, res) {
-  menu_remove(req.params.id);
+  const result = menu_remove(req.params.id);
 
-  res.status(204).send();
+  if (result.error) res.status(500);
+
+  res.send(result);
 });
 
 app.listen(PORT, function () {

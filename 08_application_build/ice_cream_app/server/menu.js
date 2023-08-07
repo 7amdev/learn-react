@@ -145,9 +145,10 @@ const menu_remove = function (menu_item_id) {
   });
 
   if (item_index < 0) 
-    return [];
+    return { error: 'Menu item not found.' };
 
-  return menu.splice(item_index, 1);
+  const [removed_item] = menu.splice(item_index, 1);
+  return removed_item;
 };
 
 

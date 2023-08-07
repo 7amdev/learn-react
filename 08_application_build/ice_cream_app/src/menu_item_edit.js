@@ -226,7 +226,45 @@ const MenuItemEdit = function () {
       });
     
   };
-  
+
+  const on_delete_handler = function () {
+    const http_request = new Request(`/api/menu/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+    fetch(http_request)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('Error: respnse not ok...', { 
+            cause: response
+          });
+        }
+
+        return response.json();
+      })
+      .then(function (response_data) {
+        console.log('Delete: ');
+        console.log(response_data);
+        navigate('/', {
+          state: { heading_title_focus: true }
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        if (error.cause && error.cause.status) {
+          switch (error.cause.status) {
+            case 400: break;
+            case 401: break;
+            case 404: break;
+            case 500: break;
+          }
+        }
+      });
+  };
+
   return (
     <main id="main" tabIndex={"-1"}>
       <Helmet>
@@ -319,7 +357,20 @@ const MenuItemEdit = function () {
             </div>
           }
 
-          <input type="submit" disabled={is_submitting} className="form__submit" value={"Save"}/>
+          <div className="form_action">
+            <input 
+              type="submit" 
+              disabled={is_submitting} 
+              className="form__submit" 
+              value={"Save"}
+            />
+            <input 
+              type="button" 
+              className="form__submit" 
+              value={"Delete"} 
+              onClick={on_delete_handler} 
+            />
+          </div>
         </form>
       }
     </main>
