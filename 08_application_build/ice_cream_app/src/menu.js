@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Helmet from "react-helmet";
 import './styles/component.css';
 
-const IceCreamMenu = function () {
+const Menu = function () {
   const [menu, set_menu]        = useState(undefined);
   const [loading, set_loading]  = useState(false);
   const navigate                = useNavigate();
@@ -137,4 +137,4 @@ const IceCreamMenu = function () {
   );
 };
 
-export default IceCreamMenu;
+export default Menu;
