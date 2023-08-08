@@ -8,10 +8,11 @@ const {
 } = require('./ice_cream');
 const { 
   menu_get, 
+  menu_get_by_id,
   menu_add, 
   menu_update,
   menu_remove, 
-  menu_get_by_id
+  menu_map_field_ice_cream_id
 } = require('./menu');
 
 const PORT = 5000;
@@ -48,7 +49,10 @@ app.get('/api/ice-creams', function (req, res) {
 // before /api/ice-creams/:id
 
 app.get('/api/ice-creams/available', function (req, res) {
-  res.send(ice_cream_available(menu_get({})));  
+  const ice_cream_ids = menu_map_field_ice_cream_id();
+  const result        = ice_cream_available(ice_cream_ids);
+
+  res.send(result);  
 });
 
 app.get('/api/ice-creams/:id', function (req, res) {

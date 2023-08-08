@@ -6,7 +6,7 @@ const ice_creams = [
   { id:  3, name: 'Inverted Stoplight'    },
   { id:  4, name: 'Roswell Crash'         },
   { id:  5, name: 'Artic Rainbow'         },
-  { id:  6, name: 'Cbocolate Hat'         },
+  { id:  6, name: 'Chocolate Hat'         },
   { id:  7, name: 'Strawberry Jerry'      },
   { id:  8, name: 'Mint Stack'            },
   { id:  9, name: 'Cookie on a Stick'     },
@@ -24,17 +24,12 @@ const ice_cream_get_by_id = function (id) {
   });
 };
 
-const ice_cream_available = function (stock) {
+const ice_cream_available = function (ice_cream_ids) {
 
-//  Returns all the Ice Creams that is NOT in Stock.
+//  Returns all the Ice Creams that is NOT in any MENU-ITEM.
   
   return ice_creams.filter(function (ice_cream) {
-
-    const result = stock.find(function (stock_item) {
-      return stock_item.ice_cream_id === ice_cream.id
-    });
-
-    return result === undefined;
+    return !ice_cream_ids.includes(ice_cream.id);
   });
 };
 

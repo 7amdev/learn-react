@@ -151,11 +151,17 @@ const menu_remove = function (menu_item_id) {
   return removed_item;
 };
 
+const menu_map_field_ice_cream_id = function () {
+  return menu.map(function (menu_item) {
+    return menu_item.ice_cream_id;
+  });
+};
 
 module.exports = {
   menu_get,
   menu_get_by_id,
   menu_add,
   menu_update,
-  menu_remove
+  menu_remove,
+  menu_map_field_ice_cream_id
 };
