@@ -27,12 +27,12 @@ const Header = function () {
             </li>
             <li>
               <NavLink
-              to={'/settings'} 
+              to={'/ice-creams'} 
               className={function ({isActive}) {
                 if (!isActive) return 'nav__link';
                 return 'nav__link nav__link--active';
               }}>
-                  Settings
+                  Add flavor
               </NavLink>
             </li>
           </ul>
