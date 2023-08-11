@@ -7,7 +7,6 @@ const IceCreams = function () {
   const {current: abort_controller}   = useRef(new AbortController());
 
   useEffect(function () {
-
     const request = new Request('/api/ice-creams/available', {
       method: 'GET',
       signal: abort_controller.signal

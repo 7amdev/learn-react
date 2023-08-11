@@ -1,7 +1,7 @@
 const menu = [
   {
     id: 1, 
-    ice_cream_id: 1,
+    ice_cream_id: 2,
     in_stock: true,
     quantity: 20,
     price: 151,      //   151 / 100 = 1.51
@@ -9,7 +9,7 @@ const menu = [
   },
   {
     id: 2, 
-    ice_cream_id: 8,
+    ice_cream_id: 7,
     in_stock: true,
     quantity: 30,
     price: 164,      //   164 / 100 = 1.51
@@ -17,7 +17,7 @@ const menu = [
   },
   {
     id: 3, 
-    ice_cream_id: 10,
+    ice_cream_id: 4,
     in_stock: true,
     quantity: 30,
     price: 150,      //   151 / 100 = 1.51
@@ -25,7 +25,7 @@ const menu = [
   },
   {
     id: 4, 
-    ice_cream_id: 4,
+    ice_cream_id: 3,
     in_stock: true,
     quantity: 10,
     price: 182,      //   151 / 100 = 1.51
@@ -33,7 +33,7 @@ const menu = [
   },
   {
     id: 5, 
-    ice_cream_id: 7,
+    ice_cream_id: 6,
     in_stock: false,
     quantity: 0,
     price: 298,      //   151 / 100 = 1.51
@@ -41,7 +41,7 @@ const menu = [
   },
   {
     id: 6, 
-    ice_cream_id : 2,
+    ice_cream_id : 5,
     in_stock: true,
     quantity: 11,
     price: 129,      //   129 / 100 = 1.29
@@ -49,7 +49,7 @@ const menu = [
   },
   {
     id: 7, 
-    ice_cream_id : 11,
+    ice_cream_id : 1,
     in_stock: true,
     quantity: 50,
     price: 219,      //   219 / 100 = 2.19

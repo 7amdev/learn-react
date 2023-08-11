@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef} from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Helmet from "react-helmet";
+
+import MenuItem from "./menu_item";
+import MenuList from "./menu_list";
+
 import './styles/component.css';
 
 const Menu = function () {
@@ -91,48 +95,28 @@ const Menu = function () {
       <h2 ref={heading_title} tabIndex={"-1"}>Ice Cream Menu</h2>
       { loading && <p>Loading menu, please wait.</p> }
       { menu && menu.length === 0 && <p>No Menu Available today.</p> }
-      <ul className="list-group list-group--flush">
-        
+      <MenuList>
         { menu && menu.length > 0 &&  
-          menu.map(item => {
+          menu.map(function (item) {
             return (
-              <li className="list-group__item" key={item.id.toString()}>
-                <section 
-                  className="card" 
-                  tabIndex={0} 
-                  onClick={function (e) {
-                    on_card_click_handler(e.type, e.which, item.id);
-                  }}
-                  onKeyUp={function (e) {
-                    on_card_click_handler(e.type, e.which, item.id);
-                  }} >
-                  <img className="card__img" src={`/ice_cream_images/ice_cream_${item.id}.jpg`} loading="lazy" />
-                  <div className="card__body">
-                    <h3 className="card__title">
-                      <Link 
-                        to={`/menu-items/${item.id}`} 
-                        className="card__link"
-                        state={ { heading_title_focus: true } }
-                        onClick={function (e) {
-                          e.stopPropagation();
-                        }}>
-                          { item.ice_cream.name }
-                      </Link>
-                    </h3>                    
-                    <div className="card__group--inline">
-                      <p className="card__price">{`$${item.price.toFixed(2)}`}</p>
-                      <span className="card__dot">{` · `}</span>
-                      { item.quantity == 0 && <p className="card__quantity text-red">{`Currently out of stock`}</p>}
-                      { item.quantity > 0  && <p className="card__quantity text-green">{`${item.quantity} in stock`}</p>}
-                    </div>
-                    <p className="card__description">{ item.description }</p>
-                  </div>
-                </section>
-              </li>
+              <MenuItem 
+                key={item.id.toString()}
+                id={item.id} 
+                ice_cream_name={item.ice_cream.name} 
+                ice_cream_id={item.ice_cream_id}
+              >
+                <div className="card__group--inline">
+                  <p className="card__price">{`$${item.price.toFixed(2)}`}</p>
+                  <span className="card__dot">{` · `}</span>
+                  { item.quantity == 0 && <p className="card__quantity text-red">{`Currently out of stock`}</p>}
+                  { item.quantity > 0  && <p className="card__quantity text-green">{`${item.quantity} in stock`}</p>}
+                </div>
+                <p className="card__description">{ item.description }</p>
+              </MenuItem>                    
             );
           })
         }
-      </ul>
+      </MenuList>
     </main>
   );
 };
