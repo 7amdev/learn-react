@@ -1,6 +1,5 @@
 
 const ice_creams = [
-  { id:  0, name: 'Stripey Madness'       },
   { id:  1, name: 'Cherry Blast'          },
   { id:  2, name: 'Cookie Tower of Power' },
   { id:  3, name: 'Inverted Stoplight'    },
@@ -12,6 +11,7 @@ const ice_creams = [
   { id:  9, name: 'Cookie on a Stick'     },
   { id: 10, name: 'Snowman godfather'     },
   { id: 11, name: 'Choco Mirror Ball'     },
+  { id: 12, name: 'Stripey Madness'       },
 ];
 
 const ice_cream_get = function () {

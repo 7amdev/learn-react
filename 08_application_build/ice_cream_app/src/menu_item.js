@@ -14,7 +14,7 @@ const MenuItem = function ({ children, id, ice_cream_id, ice_cream_name }) {
       state: { heading_title_focus: true }
     });
   };
-  
+
   return (
     <section 
       className="card" 
