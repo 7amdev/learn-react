@@ -116,6 +116,7 @@ const Menu = function () {
                 id={item.id} 
                 ice_cream_name={item.ice_cream.name} 
                 ice_cream_id={item.ice_cream_id}
+                navigate_to={`/menu-items/${item.id}`}
               >
                 <div className="card__group--inline">
                   <p className="card__price">{`$${item.price.toFixed(2)}`}</p>

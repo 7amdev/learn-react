@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const MenuItem = function ({ children, id, ice_cream_id, ice_cream_name }) {
+const MenuItem = function ({ children, id, ice_cream_id, ice_cream_name, navigate_to }) {
   const CARD_EVENTS = Object.freeze({ click: 'click', keyup: 'keyup' });
   const navigate    = useNavigate();
 
@@ -10,7 +10,7 @@ const MenuItem = function ({ children, id, ice_cream_id, ice_cream_name }) {
     if (!(event_type in CARD_EVENTS)) return; 
     if (event_type === 'keyup' && event_which != 13) return; 
     
-    navigate(`/menu-items/${card_item_id}`, {
+    navigate(navigate_to, {
       state: { heading_title_focus: true }
     });
   };
@@ -34,7 +34,7 @@ const MenuItem = function ({ children, id, ice_cream_id, ice_cream_name }) {
       <div className="card__body">
         <h3 className="card__title">
           <Link 
-            to={`/menu-items/${id}`} 
+            to={navigate_to} 
             className="card__link"
             state={ { heading_title_focus: true } }
             onClick={function (e) {

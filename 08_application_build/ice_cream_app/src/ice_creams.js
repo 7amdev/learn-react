@@ -60,7 +60,8 @@ const IceCreams = function () {
               <MenuItem
                 key={ice_cream.id.toString()}
                 ice_cream_id={ice_cream.id}
-                ice_cream_name={ice_cream.name} 
+                ice_cream_name={ice_cream.name}
+                navigate_to={'/'}
               />
             );
           })
