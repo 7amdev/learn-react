@@ -1,4 +1,3 @@
-
 export const validator_description = function (value) {
   if (!value) return 'Description is a required field.'; 
   return null;
