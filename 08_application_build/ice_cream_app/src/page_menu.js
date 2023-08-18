@@ -7,7 +7,7 @@ import MenuList from "./menu_list";
 
 import './styles/component.css';
 
-const Menu = function () {
+const PMenu = function () {
   const [menu, set_menu]        = useState(undefined);
   const [loading, set_loading]  = useState(false);
   const navigate                = useNavigate();
@@ -134,4 +134,4 @@ const Menu = function () {
   );
 };
 
-export default Menu;
+export default PMenu;

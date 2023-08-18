@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   description: ''
 };
 
-const MenuItemEdit = function () {
+const PMenuItemEdit = function () {
   const [menu_item, set_menu_item]          = useState(INITIAL_STATE);
   const [is_loading, set_is_loading]        = useState(undefined);
   const navigate                            = useNavigate();
@@ -202,4 +202,4 @@ const MenuItemEdit = function () {
   );
 };
 
-export default MenuItemEdit;
+export default PMenuItemEdit;

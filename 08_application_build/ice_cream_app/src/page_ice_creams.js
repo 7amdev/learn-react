@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import MenuList from "./menu_list";
 import MenuItem from "./menu_item";
 
-const IceCreams = function () {
+const PIceCreams = function () {
   const [ice_creams, set_ice_creams]  = useState([]);
   const heading_title                 = useRef(null);
   const {current: abort_controller}   = useRef(new AbortController());
@@ -72,4 +72,4 @@ const IceCreams = function () {
   );
 };
 
-export default IceCreams;
+export default PIceCreams;
