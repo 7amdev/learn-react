@@ -191,14 +191,6 @@ const MenuItemEdit = function () {
       </Helmet>
       <h2 ref={heading_title} tabIndex="-1">Edit Menu Item Page</h2>
       { is_loading === true && <p>Loading menu item, please wait...</p> }
-      { is_loading === false 
-        && (
-          <dl>
-            <dt className="form__title">{ menu_item.ice_cream.name }</dt>
-            <dd className="form__description">{ menu_item.description }</dd>
-          </dl>
-        )
-      }
       { is_loading === false && 
         <MenuItemForm
           data={menu_item}

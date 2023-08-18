@@ -141,6 +141,12 @@ const MenuItemForm = function ({ data, onSubmit, onDelete }) {
       onSubmit={on_form_submit_handler} 
       noValidate
     >
+      <img 
+        className="card__img" 
+        src={`/ice_cream_images/ice_cream_${menu_item.ice_cream_id}.jpg`} 
+        loading="lazy" 
+      />
+      <p className="form__title">{ menu_item.ice_cream.name }</p>
       <label 
         htmlFor={description_uid} 
         aria-label="description"
