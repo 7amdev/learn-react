@@ -7,9 +7,19 @@ import {
   validator_description 
 } from './validators';
 
+const INITIAL_STATE = {
+  id: '', 
+  in_stock: false,
+  ice_cream_id: '',
+  price: '0.00',
+  quantity: '0',
+  ice_cream: { name: '' },
+  description: ''
+};
+
 const MenuItemForm = function ({ data, onSubmit, onDelete }) {
   const form_element  = useRef(null);
-  const [menu_item, set_menu_item] = useState(data);
+  const [menu_item, set_menu_item] = useState(INITIAL_STATE);
   const [has_submitted, set_has_submitted] = useState(false);
   const [is_submitting, set_is_submitting] = useState(false);
   const [
@@ -45,7 +55,10 @@ const MenuItemForm = function ({ data, onSubmit, onDelete }) {
   });
 
   useEffect(function () {
-    set_menu_item(data);
+    set_menu_item({
+      ...INITIAL_STATE, 
+      ...data
+    });
   }, [data]);
 
   const on_change_handler = function (e) {
@@ -141,11 +154,14 @@ const MenuItemForm = function ({ data, onSubmit, onDelete }) {
       onSubmit={on_form_submit_handler} 
       noValidate
     >
-      <img 
-        className="card__img" 
-        src={`/ice_cream_images/ice_cream_${menu_item.ice_cream_id}.jpg`} 
-        loading="lazy" 
-      />
+      { menu_item.ice_cream_id && 
+        <img 
+          className="card__img" 
+          src={`/ice_cream_images/ice_cream_${menu_item.ice_cream_id}.jpg`} 
+          loading="lazy" 
+        />
+      }
+      
       <p className="form__title">{ menu_item.ice_cream.name }</p>
       <label 
         htmlFor={description_uid} 
@@ -161,7 +177,7 @@ const MenuItemForm = function ({ data, onSubmit, onDelete }) {
         cols={40}
         onChange={on_change_handler} 
         className={ 
-          (has_submitted && price_validation) 
+          (has_submitted && description_validation) 
           ? 'form__error form__error--input'
           : null 
         }
@@ -184,7 +200,8 @@ const MenuItemForm = function ({ data, onSubmit, onDelete }) {
         type="checkbox"
         name="in_stock"
         checked={menu_item.in_stock}
-        onChange={on_change_handler}/>
+        onChange={on_change_handler}
+      />
 
       <label 
         htmlFor={price_uid} 
