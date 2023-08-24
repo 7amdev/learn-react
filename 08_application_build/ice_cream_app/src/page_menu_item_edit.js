@@ -4,17 +4,8 @@ import { Helmet } from "react-helmet";
 import MenuItemForm from "./menu_item_form";
 
 
-const INITIAL_STATE = {
-  id: '', 
-  in_stock: false,
-  price: '0.00',
-  quantity: '0',
-  ice_cream: { name: '' },
-  description: ''
-};
-
 const PMenuItemEdit = function () {
-  const [menu_item, set_menu_item]          = useState(INITIAL_STATE);
+  const [menu_item, set_menu_item]          = useState({});
   const [is_loading, set_is_loading]        = useState(undefined);
   const navigate                            = useNavigate();
   const { current: abort_controller }       = useRef(new AbortController());
