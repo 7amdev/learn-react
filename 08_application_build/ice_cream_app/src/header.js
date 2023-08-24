@@ -27,7 +27,7 @@ const Header = function () {
             </li>
             <li>
               <NavLink
-              to={'/ice-creams'} 
+              to={'/menu-items/add/choose-ice-cream'} 
               className={function ({isActive}) {
                 if (!isActive) return 'nav__link';
                 return 'nav__link nav__link--active';
