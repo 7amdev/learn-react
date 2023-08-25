@@ -145,6 +145,7 @@ const MenuItemForm = function ({ data, onSubmit, onDelete }) {
 
   const on_delete_handler = function (e) {
     e.preventDefault();
+    onDelete();
   }
 
   return (

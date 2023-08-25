@@ -171,8 +171,6 @@ const PMenuItemEdit = function () {
       });
   };
 
-  console.log(menu_item);
-
   return (
     <main id="main" tabIndex={"-1"}>
       <Helmet>

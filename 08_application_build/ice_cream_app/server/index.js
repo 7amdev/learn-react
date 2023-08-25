@@ -113,7 +113,7 @@ app.get('/api/menu/:id', function (req, res) {
 });
 
 app.post('/api/menu', function (req, res) {
-  const new_entry  = req.body;
+  const new_entry = req.body;
   const menu_item = menu_add(new_entry);
 
   if (!menu_item) {
