@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import MenuItemForm from "./menu_item_form";
@@ -7,11 +7,61 @@ import MenuItemForm from "./menu_item_form";
 const PMenuItemAdd = function () {
   const heading_title = useRef(null);
   const { search }    = useLocation();
+  const navigate      = useNavigate()
   const search_params = new URLSearchParams(search);
   const ICE_CREAM     = { ID: 'ice-cream-id', NAME: 'ice-cream-name' };
 
-  const on_form_submit_handler = function (form_data) {
-    console.log(form_data);
+  const on_form_submit_handler = function (form_data, set_is_submitting) {
+    const {
+      ice_cream_id, 
+      in_stock, 
+      price, 
+      quantity, 
+      description
+    } = form_data;    
+
+    const payload = JSON.stringify({
+      ice_cream_id: parseInt(ice_cream_id, 10),
+      in_stock,
+      price: parseFloat(price),
+      quantity: parseInt(quantity, 10),
+      description
+    });
+
+    const http_request = new Request(`/api/menu`, {
+      method: 'POST',
+      body: payload,
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+    fetch(http_request)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('Error: response not ok...', {
+            cause: response
+          })
+        }
+
+        return response.json();
+      })
+      .then(function (response_data) {
+        navigate('/', {
+          state: { heading_title_focus: true }
+        });
+      })
+      .catch(function (error) {
+        console.warn(error);
+        if (error.cause && error.cause.status) {
+          switch (error.cause.status) {
+            case 400: break;
+            case 401: break;
+            case 404: break;
+            case 500: break;
+          }
+        } 
+      });
   };
 
   const parse_url_search_params = function () {  
